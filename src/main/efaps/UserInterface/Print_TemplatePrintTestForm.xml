@@ -23,8 +23,10 @@
     <definition>
         <version-expression>(version==latest)</version-expression>
         <name>Print_TemplatePrintTestForm</name>
-        <field name="name">
-            <property name="Attribute">Name</property>
+        <field name="objectOID">
+            <property name="ModeCreate">EDITABLE</property>
+            <property name="UIProvider">org.efaps.admin.datamodel.ui.StringUI</property>
+            <property name="Label">Print_TemplatePrintTestForm.objectOID.Label</property>
         </field>
     </definition>
 </ui-form>
