@@ -16,6 +16,7 @@
  */
 package org.efaps.esjp.print;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -155,6 +156,7 @@ public abstract class Template_Base
 
             final Map<String, Object> parameters = new HashMap<>();
             final Map<String, Object> value = new HashMap<>();
+            value.put("CURRENTDATE", new Date());
 
             final Instance objInst = Instance
                             .get(_parameter.getParameterValue(CIFormPrint.Print_TemplatePrintTestForm.objectOID.name));
