@@ -156,7 +156,6 @@
             <groupId>jockihendry</groupId>
             <artifactId>simple-escp</artifactId>
             <version>0.5.3</version>
-            <type>pom</type>
         </dependency>
         <dependency>
             <groupId>org.efaps</groupId>
