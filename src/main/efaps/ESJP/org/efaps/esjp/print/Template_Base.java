@@ -192,7 +192,7 @@ public abstract class Template_Base
                     final List<Map<String, Object>> listmap = ((ISelectStmtPart) stmt).getData();
                     if (sds.getPaging() > 0) {
                         while (listmap.size() % sds.getPaging() != 0) {
-                            listmap.add(new HashMap<String, Object>());
+                            listmap.add(getEmptyMap(listmap.size() > 0 ? listmap.get(0) : null));
                         }
                     }
                     if (listmap != null && !listmap.isEmpty()) {
@@ -214,6 +214,23 @@ public abstract class Template_Base
             final SimpleEscp simpleEscp = new SimpleEscp(printerKey);
             simpleEscp.print(fillJob.fill());
         }
+    }
+
+    /**
+     * Gets the empty map.
+     *
+     * @param _templateMap the _template map
+     * @return the empty map
+     */
+    protected Map<String, Object> getEmptyMap(final Map<String, Object> _templateMap)
+    {
+        final Map<String,Object> ret = new HashMap<>();
+        if (_templateMap != null ) {
+            for (final Entry<String,Object> entry : _templateMap.entrySet()) {
+                ret.put(entry.getKey(), null);
+            }
+        }
+        return ret;
     }
 
     /**
