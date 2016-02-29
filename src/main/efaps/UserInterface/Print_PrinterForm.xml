@@ -25,6 +25,7 @@
         <field name="name">
             <property name="ModeCreate">EDITABLE</property>
             <property name="ModeEdit">EDITABLE</property>
+            <property name="ModeSearch">EDITABLE</property>
             <property name="Attribute">Name</property>
             <property name="Required">true</property>
         </field>
@@ -32,11 +33,13 @@
             <property name="Columns">80</property>
             <property name="ModeCreate">EDITABLE</property>
             <property name="ModeEdit">EDITABLE</property>
+            <property name="ModeSearch">EDITABLE</property>
             <property name="Attribute">Description</property>
         </field>
         <field name="key">
             <property name="ModeCreate">EDITABLE</property>
             <property name="ModeEdit">EDITABLE</property>
+            <property name="ModeSearch">EDITABLE</property>
             <property name="Attribute">Key</property>
             <property name="Required">true</property>
         </field>

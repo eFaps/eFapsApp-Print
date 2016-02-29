@@ -28,6 +28,9 @@
             <form>Print_TemplateESCPForm</form>
         </target>
         <type>Print_TemplateESCP</type>
+        <childs>
+            <child>Print_TemplateESCPTree_Printer</child>
+        </childs>
         <property name="Target">content</property>
         <property name="TargetMode">view</property>
     </definition>

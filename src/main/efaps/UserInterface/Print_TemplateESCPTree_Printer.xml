@@ -15,27 +15,25 @@
  limitations under the License.
 
 -->
-<datamodel-type xmlns="http://www.efaps.org/xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<ui-command xmlns="http://www.efaps.org/xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.efaps.org/xsd http://www.efaps.org/xsd/eFaps_1.0.xsd">
-    <uuid>8988e633-aac1-4f5e-823e-2fdecdec613c</uuid>
+    <uuid>c3340387-5e47-4c8b-a575-670e3aa30a22</uuid>
     <file-application>eFapsApp-Print</file-application>
     <definition>
         <version-expression>(version==latest)</version-expression>
-        <name>Print_Template2Printer</name>
-        <parent>ERP_Object2ObjectAbstract</parent>
-        <attribute>
-            <name>FromLink</name>
-            <type>Link</type>
-            <typelink>Print_TemplateESCP</typelink>
-            <sqltable>ERP_Object2ObjectAbstractSQLTable</sqltable>
-            <sqlcolumn>FROMID</sqlcolumn>
-        </attribute>
-         <attribute>
-            <name>ToLink</name>
-            <type>Link</type>
-            <typelink>Print_Printer</typelink>
-            <sqltable>ERP_Object2ObjectAbstractSQLTable</sqltable>
-            <sqlcolumn>TOID</sqlcolumn>
-        </attribute>
+        <name>Print_TemplateESCPTree_Printer</name>
+        <access>
+            <role>Administration</role>
+        </access>
+        <target>
+            <menu>Print_TemplateESCPTree_Printer_Menu</menu>
+            <table>Print_Template2PrinterTable</table>
+            <evaluate program="org.efaps.esjp.common.uitable.MultiPrint">
+                <property name="Type">Print_Template2Printer</property>
+                <property name="LinkFrom">FromLink</property>
+            </evaluate>
+        </target>
+        <property name="Target">content</property>
+        <property name="TargetShowCheckBoxes">true</property>
     </definition>
-</datamodel-type>
+</ui-command>
