@@ -16,18 +16,14 @@
 
 -->
 <ui-menu xmlns="http://www.efaps.org/xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.efaps.org/xsd http://www.efaps.org/xsd/eFaps_1.0.xsd">
-    <uuid>0e1f07a9-e104-4eb3-a282-309c2a86fa13</uuid>
-    <file-application>eFapsApp-Print</file-application>
+        xsi:schemaLocation="http://www.efaps.org/xsd http://www.efaps.org/xsd/eFaps_1.0.xsd">
+    <uuid>7db1f720-557c-4b32-bdab-a23771406716</uuid>
+    <file-application>eFapsApp-Mail</file-application>
     <definition>
         <version-expression>(version==latest)</version-expression>
-        <name>Print_MyDesk</name>
+        <name>Print_PrinterTree_Menu</name>
         <childs>
-            <child>Print_TemplateMyDesk</child>
-            <child>Print_PrinterMyDesk</child>
+            <child>Print_PrinterTree_Menu_Action</child>
         </childs>
-        <parents>
-            <parent>Admin_Common_MyDesk</parent>
-        </parents>
     </definition>
 </ui-menu>

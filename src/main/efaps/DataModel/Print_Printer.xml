@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><!--
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
 
  Copyright 2003 - 2016 The eFaps Team
 
@@ -15,19 +16,13 @@
  limitations under the License.
 
 -->
-<ui-menu xmlns="http://www.efaps.org/xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.efaps.org/xsd http://www.efaps.org/xsd/eFaps_1.0.xsd">
-    <uuid>0e1f07a9-e104-4eb3-a282-309c2a86fa13</uuid>
+<datamodel-type xmlns="http://www.efaps.org/xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.efaps.org/xsd http://www.efaps.org/xsd/eFaps_1.0.xsd">
+    <uuid>d2436308-779b-4bd9-9578-028be81d8413</uuid>
     <file-application>eFapsApp-Print</file-application>
     <definition>
         <version-expression>(version==latest)</version-expression>
-        <name>Print_MyDesk</name>
-        <childs>
-            <child>Print_TemplateMyDesk</child>
-            <child>Print_PrinterMyDesk</child>
-        </childs>
-        <parents>
-            <parent>Admin_Common_MyDesk</parent>
-        </parents>
+        <name>Print_Printer</name>
+        <parent>Print_PrinterAbstract</parent>
     </definition>
-</ui-menu>
+</datamodel-type>
