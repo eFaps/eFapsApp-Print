@@ -30,6 +30,7 @@ import org.efaps.admin.program.esjp.EFapsApplication;
 import org.efaps.admin.program.esjp.EFapsUUID;
 import org.efaps.db.Instance;
 import org.efaps.db.PrintQuery;
+import org.efaps.db.QueryBuilder;
 import org.efaps.eql.InvokerUtil;
 import org.efaps.eql.stmt.IEQLStmt;
 import org.efaps.eql.stmt.parts.ISelectStmtPart;
@@ -132,6 +133,88 @@ public abstract class Template_Base
         return ret;
     }
 
+    /**
+     * Prints the.
+     *
+     * @param _parameter the _parameter
+     * @param _templateInst the _template inst
+     * @param _objInst the _obj inst
+     * @param _printerInst the _printer inst
+     * @throws EFapsException the e faps exception
+     */
+    @SuppressWarnings("checkstyle:illegalcatch")
+    protected void print(final Parameter _parameter,
+                         final Instance _templateInst,
+                         final Instance _objInst,
+                         final Instance _printerInst)
+        throws EFapsException
+    {
+        final PrintQuery print = new PrintQuery(_templateInst);
+        print.addAttribute(CIPrint.TemplateESCP.Template);
+        print.execute();
+        final String templStr = print.getAttribute(CIPrint.TemplateESCP.Template);
+
+        String printerKey = null;
+        if (_printerInst != null && _printerInst.isValid()) {
+            final PrintQuery print2 = new PrintQuery(_printerInst);
+            print2.addAttribute(CIPrint.Printer.Key);
+            print2.execute();
+            printerKey = print2.getAttribute(CIPrint.Printer.Key);
+        }
+
+        final EFapsTemplate template = new EFapsTemplate(templStr);
+        final Report report = template.parse();
+
+        final Map<String, Object> parameters = new HashMap<>();
+        final Map<String, Object> value = new HashMap<>();
+        value.put("CURRENTDATE", new Date());
+
+        if (_objInst.isValid()) {
+            parameters.put("INSTANCE", _objInst);
+        }
+        try {
+            final String eql = replaceParameters(template.getEqlStmt(), parameters);
+            final IEQLStmt stmt = InvokerUtil.getInvoker().invoke(eql);
+            if (stmt instanceof ISelectStmtPart) {
+                final List<Map<String, Object>> listmap = ((ISelectStmtPart) stmt).getData();
+                if (listmap != null && !listmap.isEmpty()) {
+                    value.putAll(listmap.get(0));
+                }
+            }
+        } catch (final Exception e) {
+            LOG.error("Catched error", e);
+        }
+        for (final SubDataSource sds  :template.getSubDataSources()) {
+            final String eql = replaceParameters(sds.getEqlStmt(), parameters);
+            try {
+                final IEQLStmt stmt = InvokerUtil.getInvoker().invoke(eql);
+                if (stmt instanceof ISelectStmtPart) {
+                    final List<Map<String, Object>> listmap = ((ISelectStmtPart) stmt).getData();
+                    if (sds.getPaging() > 0) {
+                        while (listmap.size() % sds.getPaging() != 0) {
+                            listmap.add(new HashMap<String, Object>());
+                        }
+                    }
+                    if (listmap != null && !listmap.isEmpty()) {
+                        value.put(sds.getKey(), listmap);
+                    }
+                }
+            } catch (final Exception e) {
+                LOG.error("Catched error", e);
+            }
+        }
+        FillJob.addFunction(DoubleHeightFunction.getFunction());
+
+        final FillJob fillJob = new FillJob(report, DataSources.from(value));
+
+        final boolean print2file = printerKey == null;
+        if (print2file) {
+            LOG.info(fillJob.fill());
+        } else {
+            final SimpleEscp simpleEscp = new SimpleEscp(printerKey);
+            simpleEscp.print(fillJob.fill());
+        }
+    }
 
     /**
      * Test print.
@@ -140,71 +223,16 @@ public abstract class Template_Base
      * @return the return
      * @throws EFapsException on error
      */
-    @SuppressWarnings("checkstyle:illegalcatch")
     public Return testPrint(final Parameter _parameter)
         throws EFapsException
     {
         final Instance templInst = _parameter.getInstance();
         if (templInst.isValid() && templInst.getType().isCIType(CIPrint.TemplateESCP)) {
-            final PrintQuery print = new PrintQuery(templInst);
-            print.addAttribute(CIPrint.TemplateESCP.Template);
-            print.execute();
-            final String templStr = print.getAttribute(CIPrint.TemplateESCP.Template);
-
-            final EFapsTemplate template = new EFapsTemplate(templStr);
-            final Report report = template.parse();
-
-            final Map<String, Object> parameters = new HashMap<>();
-            final Map<String, Object> value = new HashMap<>();
-            value.put("CURRENTDATE", new Date());
-
             final Instance objInst = Instance
                             .get(_parameter.getParameterValue(CIFormPrint.Print_TemplatePrintTestForm.objectOID.name));
-            if (objInst.isValid()) {
-                parameters.put("INSTANCE", objInst);
-            }
-            try {
-                final String eql = replaceParameters(template.getEqlStmt(), parameters);
-                final IEQLStmt stmt = InvokerUtil.getInvoker().invoke(eql);
-                if (stmt instanceof ISelectStmtPart) {
-                    final List<Map<String, Object>> listmap = ((ISelectStmtPart) stmt).getData();
-                    if (listmap != null && !listmap.isEmpty()) {
-                        value.putAll(listmap.get(0));
-                    }
-                }
-            } catch (final Exception e) {
-                LOG.error("Catched error", e);
-            }
-            for (final SubDataSource sds  :template.getSubDataSources()) {
-                final String eql = replaceParameters(sds.getEqlStmt(), parameters);
-                try {
-                    final IEQLStmt stmt = InvokerUtil.getInvoker().invoke(eql);
-                    if (stmt instanceof ISelectStmtPart) {
-                        final List<Map<String, Object>> listmap = ((ISelectStmtPart) stmt).getData();
-                        if (sds.getPaging() > 0) {
-                            while (listmap.size() % sds.getPaging() != 0) {
-                                listmap.add(new HashMap<String, Object>());
-                            }
-                        }
-                        if (listmap != null && !listmap.isEmpty()) {
-                            value.put(sds.getKey(), listmap);
-                        }
-                    }
-                } catch (final Exception e) {
-                    LOG.error("Catched error", e);
-                }
-            }
-            FillJob.addFunction(DoubleHeightFunction.getFunction());
-
-            final FillJob fillJob = new FillJob(report, DataSources.from(value));
-
-            final boolean print2file = true;
-            if (print2file) {
-                LOG.info(fillJob.fill());
-            } else {
-                final SimpleEscp simpleEscp = new SimpleEscp();
-                simpleEscp.print(fillJob.fill());
-            }
+            final Instance printerInst = Instance
+                            .get(_parameter.getParameterValue(CIFormPrint.Print_TemplatePrintTestForm.printer.name));
+            print(_parameter, templInst, objInst, printerInst);
         }
         return new Return();
     }
@@ -227,5 +255,23 @@ public abstract class Template_Base
     protected Pattern getKeyPattern()
     {
         return this.keyPattern;
+    }
+
+    /**
+     * Gets the template instance for a given name.
+     *
+     * @param _parameter the _parameter
+     * @param _templateName the _template name
+     * @return the template inst4 name
+     * @throws EFapsException the e faps exception
+     */
+    public static Instance getTemplateInst4Name(final Parameter _parameter,
+                                                final String _templateName)
+        throws EFapsException
+    {
+        final QueryBuilder queryBldr = new QueryBuilder(CIPrint.TemplateAbstract);
+        queryBldr.addWhereAttrEqValue(CIPrint.TemplateAbstract.Name, _templateName);
+        final List<Instance> templInsts = queryBldr.getQuery().executeWithoutAccessCheck();
+        return templInsts.isEmpty() ? null : templInsts.get(0);
     }
 }

@@ -21,7 +21,9 @@ import java.util.UUID;
 import org.efaps.admin.common.SystemConfiguration;
 import org.efaps.admin.program.esjp.EFapsApplication;
 import org.efaps.admin.program.esjp.EFapsUUID;
+import org.efaps.api.annotation.EFapsSysConfAttribute;
 import org.efaps.api.annotation.EFapsSystemConfiguration;
+import org.efaps.esjp.admin.common.systemconfiguration.PropertiesSysConfAttribute;
 import org.efaps.util.cache.CacheReloadException;
 
 /**
@@ -39,6 +41,14 @@ public final class Print
 
     /** Assets-Configuration. */
     public static final UUID SYSCONFUUID = UUID.fromString("bd750e07-409c-460d-afbf-b44839a42477");
+
+    /** See description. */
+    @EFapsSysConfAttribute
+    public static final PropertiesSysConfAttribute GENERALPRINT4INSTANCE = new PropertiesSysConfAttribute()
+                    .sysConfUUID(SYSCONFUUID)
+                    .key(BASE + "Config4GeneralPrint4Instance")
+                    .concatenate(true)
+                    .description("Configures the print command 4 types.");
 
     /**
      * Singelton.

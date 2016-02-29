@@ -14,13 +14,12 @@
  * limitations under the License.
  *
  */
+
+
 package org.efaps.esjp.print;
 
-import org.efaps.admin.event.Parameter;
 import org.efaps.admin.program.esjp.EFapsApplication;
 import org.efaps.admin.program.esjp.EFapsUUID;
-import org.efaps.db.Instance;
-import org.efaps.util.EFapsException;
 
 /**
  * This class must be replaced for customization, therefore it is left empty.
@@ -29,25 +28,10 @@ import org.efaps.util.EFapsException;
  *
  * @author The eFaps Team
  */
-@EFapsUUID("f8f81987-9b7c-423e-9e35-5b7cc1441ba2")
+@EFapsUUID("b999081c-a2f4-4927-be8b-ac7af9a3309f")
 @EFapsApplication("eFapsApp-Print")
-public class Template
-    extends Template_Base
+public class GeneralPrint
+    extends GeneralPrint_Base
 {
-
-    /**
-     * Gets the template inst4 name.
-     *
-     * @param _parameter the _parameter
-     * @param _templateName the _template name
-     * @return the template inst4 name
-     * @throws EFapsException the e faps exception
-     */
-    public static Instance getTemplateInst4Name(final Parameter _parameter,
-                                                final String _templateName)
-        throws EFapsException
-    {
-        return Template_Base.getTemplateInst4Name(_parameter, _templateName);
-    }
 
 }

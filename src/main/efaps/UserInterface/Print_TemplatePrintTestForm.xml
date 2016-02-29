@@ -23,6 +23,20 @@
     <definition>
         <version-expression>(version==latest)</version-expression>
         <name>Print_TemplatePrintTestForm</name>
+        <field name="printer">
+            <property name="Label">Print_TemplatePrintTestForm.printer.Label</property>
+            <property name="ModeCreate">EDITABLE</property>
+            <property name="UIType">DROPDOWN</property>
+            <trigger program="org.efaps.esjp.common.uiform.Field"
+                method="getOptionListFieldValue"
+                name="Print_TemplatePrintTestForm.printer.UI_FIELD_VALUE"
+                event="UI_FIELD_VALUE">
+                <property name="Type">Print_Printer</property>
+                <property name="Select">attribute[Name]</property>
+                <property name="ValueSelect">oid</property>
+                <property name="EmptyValue">org.efaps.esjp.common.uiform.Field.EmptyValue</property>
+            </trigger>
+        </field>
         <field name="objectOID">
             <property name="ModeCreate">EDITABLE</property>
             <property name="UIProvider">org.efaps.admin.datamodel.ui.StringUI</property>
