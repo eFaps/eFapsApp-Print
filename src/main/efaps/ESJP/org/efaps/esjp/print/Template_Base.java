@@ -16,6 +16,10 @@
  */
 package org.efaps.esjp.print;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +27,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.print.Doc;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.PrintException;
+import javax.print.SimpleDoc;
 
 import org.efaps.admin.event.Parameter;
 import org.efaps.admin.event.Return;
@@ -212,7 +222,20 @@ public abstract class Template_Base
             LOG.info(fillJob.fill());
         } else {
             final SimpleEscp simpleEscp = new SimpleEscp(printerKey);
-            simpleEscp.print(fillJob.fill());
+            final Charset charset = Charset.isSupported("ISO-8859-1") ? Charset.forName("ISO-8859-1") :
+                StandardCharsets.US_ASCII;
+            final InputStream in = new ByteArrayInputStream(fillJob.fill().getBytes(charset));
+            final Doc doc = new SimpleDoc(in, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
+            final DocPrintJob job = simpleEscp.getPrintService().createPrintJob();
+            final PrintJobMonitor monitor = new PrintJobMonitor(_parameter, _printerInst, _objInst);
+            job.addPrintJobListener(monitor);
+            try {
+                job.print(doc, null);
+                monitor.waitForJobCompletion();
+            } catch (final PrintException e) {
+                LOG.error("Error during printing.", e);
+                throw new EFapsException("Error during printing", e);
+            }
         }
     }
 

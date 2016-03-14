@@ -25,7 +25,9 @@
         <name>Print_TemplateESCPTree_Menu_Action_TestPrint</name>
         <target>
             <form>Print_TemplatePrintTestForm</form>
-            <execute method="testPrint" program="org.efaps.esjp.print.Template" />
+            <execute method="testPrint" program="org.efaps.esjp.print.Template" >
+                <property name="NumberGenerator">ddb86a9f-301d-456e-8aed-40d44e9438bb</property>
+            </execute>
         </target>
         <property name="Target">modal</property>
         <property name="TargetMode">create</property>

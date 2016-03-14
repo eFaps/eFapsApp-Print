@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><!--
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
 
  Copyright 2003 - 2016 The eFaps Team
 
@@ -15,21 +16,23 @@
  limitations under the License.
 
 -->
-<ui-command xmlns="http://www.efaps.org/xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<datamodel-type xmlns="http://www.efaps.org/xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.efaps.org/xsd http://www.efaps.org/xsd/eFaps_1.0.xsd">
-    <uuid>182fdceb-3e62-4afb-ae84-12c5c6e6b7cb</uuid>
+    <uuid>087e0cfe-c849-4fb0-8c7e-8148ee301f49</uuid>
     <file-application>eFapsApp-Print</file-application>
     <definition>
         <version-expression>(version==latest)</version-expression>
-        <name>Print_GeneralPrint4Instance</name>
-        <target>
-            <form>Print_GeneralPrint4InstanceForm</form>
-            <execute program="org.efaps.esjp.print.GeneralPrint" method="print4Instance">
-                <property name="NumberGenerator">ddb86a9f-301d-456e-8aed-40d44e9438bb</property>
-            </execute>
-        </target>
-        <property name="Target">modal</property>
-        <property name="TargetMode">create</property>
-        <property name="TargetDefaultMenu">false</property>
+        <name>Print_Job</name>
+        <parent>Print_JobAbstract</parent>
+        <attribute>
+            <name>Status</name>
+            <type>Status</type>
+            <typelink>Print_JobStatus</typelink>
+            <sqltable>Print_JobSQLTable</sqltable>
+            <sqlcolumn>STATUS</sqlcolumn>
+            <trigger program="org.efaps.esjp.admin.datamodel.StatusValue"
+                name="Print_Job.StatusAbstract.RANGE_VALUE" event="RANGE_VALUE">
+            </trigger>
+        </attribute>
     </definition>
-</ui-command>
+</datamodel-type>
