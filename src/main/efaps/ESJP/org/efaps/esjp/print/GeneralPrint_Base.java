@@ -28,11 +28,13 @@ import org.efaps.admin.program.esjp.EFapsApplication;
 import org.efaps.admin.program.esjp.EFapsUUID;
 import org.efaps.db.Instance;
 import org.efaps.db.MultiPrintQuery;
+import org.efaps.db.QueryBuilder;
 import org.efaps.esjp.ci.CIFormPrint;
 import org.efaps.esjp.ci.CIPrint;
 import org.efaps.esjp.common.AbstractCommon;
 import org.efaps.esjp.common.uiform.Field;
 import org.efaps.esjp.common.uiform.Field_Base.DropDownPosition;
+import org.efaps.esjp.common.uitable.MultiPrint;
 import org.efaps.esjp.print.util.Print;
 import org.efaps.util.EFapsException;
 
@@ -102,5 +104,31 @@ public abstract class GeneralPrint_Base
         final Return ret = new Return();
         ret.put(ReturnValues.VALUES, values);
         return ret;
+    }
+
+    /**
+     * Print for instance.
+     *
+     * @param _parameter the _parameter @return the return @throws
+     * EFapsException the e faps exception
+     */
+    public Return jobMultiPrint(final Parameter _parameter)
+        throws EFapsException
+    {
+        final MultiPrint multi = new MultiPrint()
+        {
+            @Override
+            protected void add2QueryBldr(final Parameter _parameter,
+                                         final QueryBuilder _queryBldr)
+                throws EFapsException
+            {
+                super.add2QueryBldr(_parameter, _queryBldr);
+                final Instance objInst = _parameter.getInstance();
+                if (objInst != null && objInst.isValid()) {
+                    _queryBldr.addWhereAttrEqValue(CIPrint.JobAbstract.GenInstId, objInst.getGeneralId());
+                }
+            };
+        };
+        return multi.execute(_parameter);
     }
 }

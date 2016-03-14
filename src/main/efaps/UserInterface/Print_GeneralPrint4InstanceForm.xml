@@ -24,13 +24,25 @@
         <name>Print_GeneralPrint4InstanceForm</name>
         <field name="printer">
             <property name="Label">Print_GeneralPrint4InstanceForm.printer.Label</property>
-            <property name="ModeCreate">EDITABLE</property>
+            <property name="ModeEdit">EDITABLE</property>
             <property name="UIType">DROPDOWN</property>
             <trigger program="org.efaps.esjp.print.GeneralPrint"
                 method="getPrinterUIFieldValue4Instance"
                 name="Print_GeneralPrint4InstanceForm.printer.UI_FIELD_VALUE"
                 event="UI_FIELD_VALUE">
             </trigger>
+        </field>
+        <field name="jobTableHeading" character="Heading">
+            <property name="Level">2</property>
+            <property name="Label">Print_GeneralPrint4InstanceForm.jobTableHeading.Heading</property>
+        </field>
+         <field name="jobTable" character="Target">
+            <property name="ModeCreate">READONLY</property>
+            <property name="ModeEdit">READONLY</property>
+            <table>Print_GeneralPrint4InstanceJobTable</table>
+            <evaluate program="org.efaps.esjp.print.GeneralPrint" method="jobMultiPrint">
+                <property name="Type">Print_JobAbstract</property>
+            </evaluate>
         </field>
     </definition>
 </ui-form>
