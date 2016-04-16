@@ -19,7 +19,7 @@
 <common-systemconfiguration xmlns="http://www.efaps.org/xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.efaps.org/xsd http://www.efaps.org/xsd/eFaps_1.0.xsd">
     <uuid>bd750e07-409c-460d-afbf-b44839a42477</uuid>
-    <file-application>eFapsApp-Mail</file-application>
+    <file-application>eFapsApp-Print</file-application>
     <definition>
         <version-expression>(version==latest)</version-expression>
         <name>Print-Configuration</name>

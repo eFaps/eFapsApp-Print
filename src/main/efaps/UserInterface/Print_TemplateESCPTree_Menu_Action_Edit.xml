@@ -19,7 +19,7 @@
 <ui-command xmlns="http://www.efaps.org/xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.efaps.org/xsd http://www.efaps.org/xsd/eFaps_1.0.xsd">
     <uuid>6a23112d-33c8-4e17-9608-2c8918171fbc</uuid>
-    <file-application>eFapsApp-Mail</file-application>
+    <file-application>eFapsApp-Print</file-application>
     <definition>
         <version-expression>(version==latest)</version-expression>
         <name>Print_TemplateESCPTree_Menu_Action_Edit</name>
