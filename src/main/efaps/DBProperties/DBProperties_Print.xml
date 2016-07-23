@@ -20,7 +20,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.efaps.org/xsd http://www.efaps.org/xsd/eFaps_1.0.xsd">
     <uuid>0a77f883-ec16-464d-958f-7f806fdeedb3</uuid>
-    <bundle name="eFapsApp-Print" sequence="0" />
+    <file-application>eFapsApp-Print</file-application>
+    <bundle name="eFapsApp-Print" sequence="1" />
     <resource>
         <type>Properties</type>
         <language />
