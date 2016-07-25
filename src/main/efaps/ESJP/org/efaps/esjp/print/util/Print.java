@@ -32,7 +32,7 @@ import org.efaps.util.cache.CacheReloadException;
  * @author The eFaps Team
  */
 @EFapsUUID("6bf8791a-a1d1-47d1-ac63-7cd93e6df22a")
-@EFapsApplication("eFapsApp-Assets")
+@EFapsApplication("eFapsApp-Print")
 @EFapsSystemConfiguration("bd750e07-409c-460d-afbf-b44839a42477")
 public final class Print
 {
