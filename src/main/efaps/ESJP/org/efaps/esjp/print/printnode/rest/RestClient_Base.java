@@ -20,14 +20,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.List;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation.Builder;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
 import org.efaps.admin.program.esjp.EFapsApplication;
 import org.efaps.admin.program.esjp.EFapsUUID;
+import org.efaps.esjp.print.printnode.dto.PrinterDto;
 import org.efaps.esjp.print.printnode.dto.WhoamiDto;
 import org.efaps.esjp.print.util.Print;
 import org.efaps.util.EFapsException;
@@ -52,6 +55,18 @@ public abstract class RestClient_Base
         final WhoamiDto whoami = request.get(WhoamiDto.class);
         LOG.info("{}", whoami);
         return whoami;
+    }
+
+    public List<PrinterDto> printers()
+        throws EFapsException
+    {
+        final Builder request = getClient().target(Print.PRINTNODE_BASEURL.get())
+                        .path("printers")
+                        .request(MediaType.APPLICATION_JSON);
+        addAuth(request);
+        final List<PrinterDto> printers = request.get(new GenericType<List<PrinterDto>>(){});
+        LOG.info("{}", printers);
+        return printers;
     }
 
     protected void addAuth(final Builder request)

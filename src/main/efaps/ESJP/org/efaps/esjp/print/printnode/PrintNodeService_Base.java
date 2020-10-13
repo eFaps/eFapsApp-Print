@@ -2,9 +2,11 @@ package org.efaps.esjp.print.printnode;
 
 import org.efaps.admin.event.Parameter;
 import org.efaps.admin.event.Return;
+import org.efaps.admin.event.Return.ReturnValues;
 import org.efaps.admin.program.esjp.EFapsApplication;
 import org.efaps.admin.program.esjp.EFapsUUID;
 import org.efaps.db.Context;
+import org.efaps.esjp.print.printnode.dto.WhoamiDto;
 import org.efaps.esjp.print.printnode.rest.RestClient;
 import org.efaps.util.EFapsException;
 import org.slf4j.Logger;
@@ -22,8 +24,10 @@ public class PrintNodeService_Base
     {
         LOG.info("Whoami is called by {}", Context.getThreadContext().getPerson().getName());
         final RestClient client = new RestClient();
-        client.whoami();
-        return new Return();
+        final WhoamiDto whoami = client.whoami();
+        final Return ret = new Return();
+        ret.put(ReturnValues.VALUES, whoami.toString());
+        return ret;
     }
 
 }

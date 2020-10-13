@@ -152,7 +152,6 @@ public abstract class Template_Base
      * @param _printerInst the _printer inst
      * @throws EFapsException the e faps exception
      */
-    @SuppressWarnings("checkstyle:illegalcatch")
     protected void print(final Parameter _parameter,
                          final Instance _templateInst,
                          final Instance _objInst,
@@ -284,7 +283,7 @@ public abstract class Template_Base
      */
     protected Pattern getParameterPattern()
     {
-        return this.parameterPattern;
+        return parameterPattern;
     }
 
     /**
@@ -294,7 +293,7 @@ public abstract class Template_Base
      */
     protected Pattern getKeyPattern()
     {
-        return this.keyPattern;
+        return keyPattern;
     }
 
     /**

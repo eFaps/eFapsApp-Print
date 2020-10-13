@@ -19,15 +19,13 @@
 <ui-menu xmlns="http://www.efaps.org/xsd"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.efaps.org/xsd http://www.efaps.org/xsd/eFaps_1.0.xsd">
-    <uuid>ece17a17-0267-4855-9c40-5187b7e9d197</uuid>
+    <uuid>d5b76384-7378-4bf7-9867-3dfc94143f65</uuid>
     <file-application>eFapsApp-Print</file-application>
     <definition>
         <version-expression>(version==latest)</version-expression>
-        <name>Print_PrinterMyDesk_Menu_Action</name>
+        <name>Print_PrintNodeTree_Menu_Action</name>
         <childs>
-            <child>Print_PrinterMyDesk_Menu_Action_Create</child>
-            <child>Print_PrinterMyDesk_Menu_Action_CreatePrintNode</child>
-            <child>Print_PrinterMyDesk_Menu_Action_Delete</child>
+            <child>Print_PrintNodeTree_Menu_Action_Edit</child>
         </childs>
     </definition>
 </ui-menu>

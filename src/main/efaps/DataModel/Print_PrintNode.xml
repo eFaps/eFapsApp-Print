@@ -16,18 +16,14 @@
  limitations under the License.
 
 -->
-<ui-menu xmlns="http://www.efaps.org/xsd"
+<datamodel-type xmlns="http://www.efaps.org/xsd"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.efaps.org/xsd http://www.efaps.org/xsd/eFaps_1.0.xsd">
-    <uuid>ece17a17-0267-4855-9c40-5187b7e9d197</uuid>
+    <uuid>c63af3f2-e77a-4ef4-b42c-208d952ab0b0</uuid>
     <file-application>eFapsApp-Print</file-application>
     <definition>
         <version-expression>(version==latest)</version-expression>
-        <name>Print_PrinterMyDesk_Menu_Action</name>
-        <childs>
-            <child>Print_PrinterMyDesk_Menu_Action_Create</child>
-            <child>Print_PrinterMyDesk_Menu_Action_CreatePrintNode</child>
-            <child>Print_PrinterMyDesk_Menu_Action_Delete</child>
-        </childs>
+        <name>Print_PrintNode</name>
+        <parent>Print_PrinterAbstract</parent>
     </definition>
-</ui-menu>
+</datamodel-type>
