@@ -24,12 +24,14 @@ import java.util.List;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
 import org.efaps.admin.program.esjp.EFapsApplication;
 import org.efaps.admin.program.esjp.EFapsUUID;
+import org.efaps.esjp.print.printnode.dto.PrintJobDto;
 import org.efaps.esjp.print.printnode.dto.PrinterDto;
 import org.efaps.esjp.print.printnode.dto.WhoamiDto;
 import org.efaps.esjp.print.util.Print;
@@ -67,6 +69,22 @@ public abstract class RestClient_Base
         final List<PrinterDto> printers = request.get(new GenericType<List<PrinterDto>>(){});
         LOG.info("{}", printers);
         return printers;
+    }
+
+    public void printJobs(final Long _printerId, final String _content) throws EFapsException {
+        final Builder request = getClient().target(Print.PRINTNODE_BASEURL.get())
+                        .path("printjobs")
+                        .request(MediaType.APPLICATION_JSON);
+        addAuth(request);
+        final PrintJobDto dto = PrintJobDto.builder()
+                        .withPrinterId(_printerId)
+                        .withTitle("Printing")
+                        .withSource("Cloud Innobierto")
+                        .withContentType("raw_base64")
+                        .withContent(Base64.getEncoder().encodeToString(_content.getBytes(StandardCharsets.UTF_8)))
+                        .build();
+        final Long jobId = request.post(Entity.json(dto), Long.class);
+        LOG.info("jobId: {}", jobId);
     }
 
     protected void addAuth(final Builder request)

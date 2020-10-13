@@ -1,11 +1,14 @@
 package org.efaps.esjp.print.printnode;
 
+import java.util.List;
+
 import org.efaps.admin.event.Parameter;
 import org.efaps.admin.event.Return;
 import org.efaps.admin.event.Return.ReturnValues;
 import org.efaps.admin.program.esjp.EFapsApplication;
 import org.efaps.admin.program.esjp.EFapsUUID;
 import org.efaps.db.Context;
+import org.efaps.esjp.print.printnode.dto.PrinterDto;
 import org.efaps.esjp.print.printnode.dto.WhoamiDto;
 import org.efaps.esjp.print.printnode.rest.RestClient;
 import org.efaps.util.EFapsException;
@@ -30,4 +33,16 @@ public class PrintNodeService_Base
         return ret;
     }
 
+    public void printRaw(final String _printerKey, final String _content)
+        throws EFapsException
+    {
+        final RestClient client = new RestClient();
+        final List<PrinterDto> printers = client.printers();
+        for (final PrinterDto printer : printers) {
+            if (printer.getName().equals(_printerKey)) {
+                client.printJobs(printer.getId(), _content);
+                break;
+            }
+        }
+    }
 }

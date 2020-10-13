@@ -47,9 +47,11 @@ import org.efaps.eql.stmt.parts.ISelectStmtPart;
 import org.efaps.esjp.ci.CIFormPrint;
 import org.efaps.esjp.ci.CIPrint;
 import org.efaps.esjp.common.AbstractCommon;
+import org.efaps.esjp.db.InstanceUtils;
 import org.efaps.esjp.print.escp.DoubleHeightFunction;
 import org.efaps.esjp.print.escp.EFapsTemplate;
 import org.efaps.esjp.print.escp.EFapsTemplate.SubDataSource;
+import org.efaps.esjp.print.printnode.PrintNodeService;
 import org.efaps.util.EFapsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -166,9 +168,9 @@ public abstract class Template_Base
         String printerKey = null;
         if (_printerInst != null && _printerInst.isValid()) {
             final PrintQuery print2 = new PrintQuery(_printerInst);
-            print2.addAttribute(CIPrint.Printer.Key);
+            print2.addAttribute(CIPrint.PrinterAbstract.Key);
             print2.execute();
-            printerKey = print2.getAttribute(CIPrint.Printer.Key);
+            printerKey = print2.getAttribute(CIPrint.PrinterAbstract.Key);
         }
 
         final EFapsTemplate template = new EFapsTemplate(templStr);
@@ -219,7 +221,7 @@ public abstract class Template_Base
         final boolean print2file = printerKey == null;
         if (print2file) {
             LOG.info(fillJob.fill());
-        } else {
+        } else if (InstanceUtils.isType(_printerInst, CIPrint.Printer)){
             final SimpleEscp simpleEscp = new SimpleEscp(printerKey);
             final Charset charset = Charset.isSupported("ISO-8859-1") ? Charset.forName("ISO-8859-1") :
                 StandardCharsets.US_ASCII;
@@ -235,6 +237,9 @@ public abstract class Template_Base
                 LOG.error("Error during printing.", e);
                 throw new EFapsException("Error during printing", e);
             }
+        } else {
+            final PrintNodeService printNodeService = new PrintNodeService();
+            printNodeService.printRaw(printerKey, fillJob.fill());
         }
     }
 

@@ -31,7 +31,7 @@
                 method="getOptionListFieldValue"
                 name="Print_TemplatePrintTestForm.printer.UI_FIELD_VALUE"
                 event="UI_FIELD_VALUE">
-                <property name="Type">Print_Printer</property>
+                <property name="Type">Print_PrinterAbstract</property>
                 <property name="Select">attribute[Name]</property>
                 <property name="ValueSelect">oid</property>
                 <property name="EmptyValue">org.efaps.esjp.common.uiform.Field.EmptyValue</property>
