@@ -22,6 +22,11 @@
     <definition>
         <version-expression>(version==latest)</version-expression>
         <name>Print_PrinterTable</name>
+        <field name="type">
+            <property name="Attribute">Type</property>
+            <property name="Label">Print_PrinterAbstract/Type.Label</property>
+            <property name="ModeSearch">READONLY</property>
+        </field>
         <field name="key">
             <property name="Attribute">Key</property>
             <property name="Label">Print_PrinterAbstract/Key.Label</property>
