@@ -71,7 +71,9 @@ public abstract class RestClient_Base
         return printers;
     }
 
-    public void printJobs(final Long _printerId, final String _content) throws EFapsException {
+    public Long printJobs(final Long _printerId, final String _content)
+        throws EFapsException
+    {
         final Builder request = getClient().target(Print.PRINTNODE_BASEURL.get())
                         .path("printjobs")
                         .request(MediaType.APPLICATION_JSON);
@@ -85,6 +87,7 @@ public abstract class RestClient_Base
                         .build();
         final Long jobId = request.post(Entity.json(dto), Long.class);
         LOG.info("jobId: {}", jobId);
+        return jobId;
     }
 
     protected void addAuth(final Builder request)

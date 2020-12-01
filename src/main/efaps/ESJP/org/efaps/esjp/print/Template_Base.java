@@ -239,7 +239,7 @@ public abstract class Template_Base
             }
         } else {
             final PrintNodeService printNodeService = new PrintNodeService();
-            printNodeService.printRaw(printerKey, fillJob.fill());
+            printNodeService.printRaw(_printerInst, _objInst, printerKey, fillJob.fill());
         }
     }
 
