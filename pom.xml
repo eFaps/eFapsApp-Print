@@ -152,9 +152,9 @@
             <version>${efaps.app.dependencies}</version>
         </dependency>
         <dependency>
-            <groupId>jockihendry</groupId>
+            <groupId>org.efaps</groupId>
             <artifactId>simple-escp</artifactId>
-            <version>0.5.3</version>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <!-- This are dependencies from simple-escp that must be added because they are marked "runtime -->
         <dependency>
